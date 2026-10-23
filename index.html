@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Konoha Radio</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #10140f; color: #e8e2c8; font-family: system-ui, sans-serif; text-align: center; }
+  button { font-size: 1.2rem; padding: .8em 2em; border: 0; border-radius: 99px; background: #e07a2e; color: #10140f; cursor: pointer; }
+  .live { color: #e0442e; font-weight: bold; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Konoha Radio</h1>
+  <p><span class="live">● LIVE</span> 24/7 Hidden Leaf ambience</p>
+  <button id="play">▶ Tune in</button>
+  <audio id="a" src="radio.m4a" loop preload="metadata"></audio>
+</main>
+<script>
+  // Everyone hears the same spot: position = wall clock mod track length.
+  const a = document.getElementById('a'), b = document.getElementById('play');
+  const sync = () => { if (a.duration) a.currentTime = (Date.now() / 1000) % a.duration; };
+  b.onclick = () => {
+    if (!a.paused) { a.pause(); b.textContent = '▶ Tune in'; return; }
+    sync(); a.play(); b.textContent = '❚❚ Pause';
+  };
+  a.onloadedmetadata = sync;
+</script>
+</body>
+</html>
